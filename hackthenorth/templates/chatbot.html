@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %} 
+    Chat Bot
+{% endblock %}
+
+{% block body %} 
+    <div id="txtboxwrapper">
+        <div id="txtbox">
+            <br><br>
+            <form action="/chatbot" method="post" id="msging" style="padding-bottom: 10px;">
+                <input class="msg" required placeholder="Your message" name="userinput">
+                <button class="msgbtn" onclick="document.querySelector('#msging').submit();">Send</button>
+            </form>
+            {% if outputs %}
+                {% for output in outputs %}
+                    {% if output[1] == 'bot' %}
+                        <div class="chatbotmsg">{{ output[0] }}</div>
+                    {% else %}
+                        <div class="usermsg">{{ output[0] }}</div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <br><br>
+    <form id="clearchat" method="post" action="/clearchat">
+        <button class="btn btn-outline-danger" onclick="document.querySelector('#clearchat').submit">Delete chat</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sign up 
+{% endblock %} 
+
+{% block body %}
+    <form method="post" action="/signup" id="signup">
+        <label for="username" style="color: blueviolet;">Username: </label><br>
+        <input required id="username" name="username" class="logins"><br><br>
+
+        <label for="pw" style="color: blueviolet;">Password: </label><br>
+        <input required id="pw" name="pw" class="logins" placeholder="Choose a strong password" type="password"><br><br>
+
+        <label for="pw2" style="color: blueviolet;">Confirm pasword: </label><br>
+        <input required id="pw2" class="logins" type="password"><br><br>
+
+        <script>
+            function check() {
+                let pw = document.querySelector("#pw").value;
+                let pw2 = document.querySelector("pw2").value;
+                if (pw === pw2) {
+                    if (pw.length >= 8) {
+                        document.querySelector("#signup").submit();
+                    }
+                    else {
+                        alert("Password must be atleast 8 characters long");
+                    }
+                }
+                else {
+                    alert("Passwords must match");
+                }
+            }
+        </script>
+        <button onlick="console.log('hello'); check();" class="btn btn-primary">Sign up</button>
+    </form>
+{% endblock %}

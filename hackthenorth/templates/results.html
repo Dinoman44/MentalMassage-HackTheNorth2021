@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Document</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/entryform.css') }}">
+    </head>
+    <body>
+        <div class="modal" id = "modal">
+            <p class="message">The scientist thanks you for bringing his papers back to him. Luckily there was no damage (that would have been catastrophic)</p>
+            <p class="message">He looks at his notes, and he comes up with this diagnosis:</p>
+            <ul>
+                {% for d in diagnosis %}
+                    <li class="diagnosis">{{ d }}</li>
+                {% endfor %}
+                {% if empty %}
+                    <p class="diagnosis">Patient seems to be normal - either he actually is, or there is something he isn't telling me :suspicious_face:</p>
+                {% endif %}
+            </ul>
+            <div class="options">
+                <button class="btn" onclick="location.href='https://www.healthline.com/health/depression/how-to-fight-depression';">Click here for more info</button>
+            </div>
+        </div>
+        <!--<script src="{{url_for('static', filename='js/results.js')}}"></script>-->
+    </body>
+</html>

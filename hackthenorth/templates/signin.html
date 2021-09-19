@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sign up 
+{% endblock %} 
+
+{% block body %}
+    <form method="post" action="/signin">
+        <label for="username" style="color: blueviolet;">Username: </label><br>
+        <input required id="username" name="username" class="logins"><br><br>
+
+        <label for="pw" style="color: blueviolet;">Password: </label><br>
+        <input required id="pw" name="pw" class="logins" type="password"><br><br>
+        
+        <button onlick="document.querySelector('form').submit();" class="btn btn-primary">Sign in</button>
+    </form>
+    {% if problem %}
+        <div class="alert alert-danger">{{ problem }}</div>
+    {% endif %}
+{% endblock %}

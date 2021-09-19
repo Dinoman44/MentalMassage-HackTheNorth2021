@@ -1,0 +1,127 @@
+{% extends "layout.html" %} 
+<!-- 
+   see the video tutorial for how this kind of thing works:
+   https://youtu.be/H3Fn33lYuE0
+-->
+
+{% block extra_files %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/gamelvl2.css') }}">
+{% endblock %}
+
+{% block title %}
+    Level 2
+{% endblock %}
+
+{% block body %}
+    <div class="frame">
+        <div class="corner_topleft"></div>
+        <div class="corner_topright"></div>
+        <div class="corner_bottomleft"></div>
+        <div class="corner_bottomright"></div>
+        
+        <div class="camera">
+            <div class="map pixel-art">
+                <div class="character" facing="down" walking="true">
+                    <div class="shadow pixel-art"></div>
+                    <div class="character_spritesheet pixel-art"></div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
+    <div class="modal" id = "whiteboard">
+        <div class="options">
+            Gym to the left<br>
+            Office to the right<br>
+            <br>Warning! Only visit the scientist if all 5 papers have been found and answered. If not, he might troll you...<br>
+            <button class="btn" onclick="senddata();">Visit Dr. Scietinst!</button>
+         </div>
+    </div>
+
+    <div class="modal" id = "paperonfloor">
+        {% if answered %}
+            {% if answers[0] != "" %}
+                <h1>ANSWERED</h1>
+            {% else %}
+                <p class = 'message'>
+                    Notes: 
+                    The test subject has ____ sleep each day
+                </p>
+                <br>
+                <div class="options">
+                    <button class="btn" onclick="changeval(1, 'Not enough'); changepf();">Not enough</button>
+                    <button class="btn" onclick="changeval(1, 'Enough'); changepf();">Enough</button>
+                    <button class="btn" onclick="changeval(1, 'Too much'); changepf();">Too much</button>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <div class="modal" id = "exercise">
+        <div class="options">
+            Note by Dr. Scietinst (the scientist)
+            <br><br>
+            Yes. Lockdowns suck... Anyway here's today's exercise routine you can do at home because the guys couldn't finish building the gym (remember... unexpected lockdown?)
+            <br>
+            (Did you know exercise and yoga helps alot with mental health)
+            <br><br>
+            100 Pushups<br>
+            100 Situps<br>
+            100 Squats<br>
+            10 km run<br>
+            <br><br>
+            I heard this gives you superhuman powers. Just don't become fat.<br><br>
+
+            Last updated - 27/4/2069
+         </div>
+    </div> 
+
+    <div class="modal" id = "door"> 
+        Do you want to go through the door? You'll lose all progress on this level.
+        <div class="options">
+            <button class="btn" onclick="location.href = '/game/level1'">Yes. Exit the building</button>
+        </div>
+    </div>
+
+    <div class="modal" id = "overwhelm">
+        {% if answered %}
+            {% if answers[1] != "" %}
+                <h1>ANSWERED</h1>
+            {% else %}
+                Test subject has been a good boy so far and has never entered the forbidden office <br><br><br>
+
+                Test subject feels overwhelmed ____
+                <div class="options">
+
+                    <button class="btn" onclick="changeval(2, 'Never'); changeow();">Never</button>
+                    <button class="btn" onclick="changeval(2, 'Sometimes'); changeow();">Sometimes</button>
+                    <button class="btn" onclick="changeval(2, 'A lot'); changeow();">A lot</button>
+                    
+                </div>
+            {% endif %}
+        {% endif %}
+    </div> 
+
+    <form action="/processing" method="post" hidden id="info">
+        {% if answered %}
+            <input id="val1" name="val1" value="{{ answers[0] }}">
+            <input id="val2" name="val2" value="{{ answers[1] }}">
+        {% else %}
+            <input id="val1" name="val1" value="">
+            <input id="val2" name="val2" value="">
+        {% endif %}
+    </form>
+    <script src="{{url_for('static', filename='js/gamelvl2.js')}}"></script>
+    <script>
+        function changeval(x, z) {
+            let id = "#val" + String(x);
+            document.querySelector(id).value = z;
+            console.log(z);
+        }
+        function senddata() {
+            document.querySelector("#info").submit();
+        }
+    </script>
+    
+{% endblock %}

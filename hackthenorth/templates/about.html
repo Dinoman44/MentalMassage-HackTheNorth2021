@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    About us
+{% endblock %}
+
+{% block body %}
+    <h1 id="logo">Mental Massage</h1>
+    <p style="font-size: small; color: rgb(80, 39, 24); font-weight: 500;">This project was created as part of <a href="https://hackthenorth.com/">Hack The North 2021</a>, by the <a href="https://uwaterloo.ca/">University of Waterloo</a></p>
+    <h2 style="font-style: oblique; font-size: large;">Team members</h2><br>
+    {% for name in names %}
+        <p class="name">{{ name }}</p>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,124 @@
+{% extends "layout.html" %} 
+<!-- 
+   see the video tutorial for how this kind of thing works:
+   https://youtu.be/H3Fn33lYuE0
+-->
+
+{% block extra_files %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/gamelvl1.css') }}">
+{% endblock %}
+
+{% block title %}
+    Level 1
+{% endblock %}
+
+{% block body %}
+    <div class="frame">
+        <div class="corner_topleft"></div>
+        <div class="corner_topright"></div>
+        <div class="corner_bottomleft"></div>
+        <div class="corner_bottomright"></div>
+        
+        <div class="camera">
+            <div class="map pixel-art">
+                <div class="character" facing="down" walking="true">
+                    <div class="shadow pixel-art"></div>
+                    <div class="character_spritesheet pixel-art"></div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
+    <div class="modal" id = "noteonwall">
+        <div class="options">
+            You are lost on an island far, far away and on the island, there are only two people: you and a scientist. He is actually a psychologist by training. He wants to examine your mental health. You answer some questions and the scientist notes them down on a piece of paper.
+            But alas! A gust blows and the paper flies away. You run to get it but it is too late. You will find these papers along your journey. Fill in the missing info to avoid the scientist's fury!!
+         </div>
+    </div>
+
+    <div class="modal" id = "bottomright">
+        {% if answered %}
+            {% if answers[0] != "" %}
+                <h1>ANSWERED</h1>
+            {% else %}
+            Subject's emotions are ____ negative
+            <div class="options">
+                <button class="btn" onclick="changeval(1, 1); changebr();">Always</button>
+                <button class="btn" onclick="changeval(1, 2); changebr();">Sometimes</button>
+                <button class="btn" onclick="changeval(1, 3); changebr();">Never</button>
+            </div>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <div class="modal" id = "topleft">
+        {% if answered %}
+            {% if answers[1] != "" %}
+                <h1>ANSWERED</h1>
+            {% else %}
+                Subject ____ forgets things
+                <div class="options">
+                    <button class="btn" onclick="changeval(2, 1); changetl();">Always</button>
+                    <button class="btn" onclick="changeval(2, 2); changetl();">Sometimes</button>
+                    <button class="btn" onclick="changeval(2, 3); changetl();">Never</button>
+                </div>
+            {% endif %}
+         {% endif %}
+    </div>
+
+    <div class="modal" id = "door">
+            Do you want to go through the door? Only click yes if you have gotten all 3 pieces of paper<br>If no, walk away
+            <div class="options">
+                <button class="btn" onclick="senddata();">Yes. Enter the building</button>
+            </div>
+    </div>
+
+    <div class="modal" id = "jumpoff">
+        {% if answered %}
+            {% if answers[2] != "" %}
+                <h1>ANSWERED</h1>
+            {% else %}
+            Subject ____ has suicidal thoughts<br><br>
+                <div class="options">
+                    <button class="btn" onclick="help(); changeval(3, 1); changejo();">Always</button>
+                    <button class="btn" onclick="help(); changeval(3, 2); changejo();">Sometimes</button> 
+                    <button class="btn" onclick="ok(); changeval(3, 3); changejo();">Never</button>
+                </div>
+            {% endif %}
+        {% endif %}
+         <p id="help" style="color: red;" hidden>Don't do it! It's not worth it!<br>Call 1800-221 4444 to reach the suicide hotline</p>
+    </div>
+
+    <form hidden action="/game/level1" method="post" id="info">
+        {% if answered %}
+            <input id="val1" name="val1" value="{{ answers[0] }}">
+            <input id="val2" name="val2" value="{{ answers[1] }}">
+            <input id="val3" name="val3" value="{{ answers[2] }}">
+        {% else %}
+            <input id="val1" name="val1" value="">
+            <input id="val2" name="val2" value="">
+            <input id="val3" name="val3" value="">
+        {% endif %}
+    </form>
+
+    <script src="{{url_for('static', filename='js/gamelvl1.js')}}"></script>
+    <script>
+        let options = ["Always", "Sometimes", "Never"];
+        function help() {
+            document.querySelector("#help").hidden = false;
+        }
+        function ok() {
+            document.querySelector("#help").hidden = true;
+        }
+        function changeval(x, y) {
+            let id = "#val" + String(x);
+            console.log(id);
+            document.querySelector(id).value = options[y-1];
+            console.log(options[y-1]);
+        }
+        function senddata() {
+            document.querySelector("#info").submit();
+        }
+    </script>
+{% endblock %}

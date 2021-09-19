@@ -1,0 +1,283 @@
+html, body {overflow: hidden;}
+
+:root {
+    --pixel-size: 2px;
+    --grid-cell: calc( var(--pixel-size) * 16);
+}
+
+ @media( min-width: 700px ) {
+    :root {
+       --pixel-size: 4px;
+    }
+ }
+ @media( min-width: 10px ) {
+    :root {
+       --pixel-size: 6px;
+    }
+ }
+ /* @media( min-width: 1000px ) {
+    :root {
+       --pixel-size: 5px;
+    }
+ } */
+
+ .pixel-art {
+    image-rendering: pixelated;
+ }
+ 
+ .frame {
+    /* This is just for Pen decoration */
+    display: flex;
+    outline: var(--pixel-size) solid #fff;
+    z-index:1; 
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    align-content: center;
+    padding-right: none;
+ }
+ 
+ .camera {
+   width: 100%;
+   height: 100%;
+   overflow: hidden;
+   background: #61ddf7;
+   position: relative;
+   align-content: center;
+ }
+ 
+ .map {
+    image-rendering: pixelated;
+    background-image: url("https://cdn.discordapp.com/attachments/858199012003282954/870939738046087168/output-onlinepngtools_8.png");
+    background-size: 100%;
+    width: calc(26 * var(--grid-cell));
+    height: calc(17 * var(--grid-cell));
+    position: relative;
+    align-content: center;
+ }
+ 
+ .character {
+    width: calc( var(--grid-cell)* 2 );
+    height: calc( var(--grid-cell)* 2 );
+    position: absolute;
+    overflow: hidden;
+ }
+ 
+ .shadow {
+    width: calc( var(--grid-cell)* 2 );
+    height: calc( var(--grid-cell)* 2 );
+    position: absolute;
+    left:0;
+    top:0;
+    background: url("https://assets.codepen.io/21542/DemoRpgCharacterShadow.png") no-repeat no-repeat;
+    background-size: 100%;
+ }
+ 
+ .character_spritesheet {
+    position: absolute;
+    background: url("https://assets.codepen.io/21542/DemoRpgCharacter.png") no-repeat no-repeat;
+    background-size: 100%;
+    width: calc( var(--grid-cell)* 8 );
+    height: calc( var(--grid-cell)* 8 );
+ }
+ 
+ .character[facing="right"] .character_spritesheet {
+    background-position-y: calc( var(--pixel-size) * -32 );
+ }
+ .character[facing="up"] .character_spritesheet {
+    background-position-y: calc( var(--pixel-size) * -64 );
+ }
+ .character[facing="left"] .character_spritesheet {
+    background-position-y: calc( var(--pixel-size) * -96 );
+ }
+ .character[walking="true"] .character_spritesheet {
+    animation: walkAnimation 0.6s steps(4) infinite; 
+ }
+ 
+ @keyframes walkAnimation {
+   from {
+     transform: translate3d(0%,0%,0);
+   }
+   to {
+     transform: translate3d(-100%,0%,0);
+   }
+ }
+/*
+ .dpad {
+    position: absolute;
+    right: calc(var(--pixel-size) * 2);
+    bottom: calc(var(--pixel-size) * 2);
+    width: calc(var(--pixel-size) * 37);
+    height: calc(var(--pixel-size) * 38);
+ }
+ .dpad-button {
+    appearance:none;
+    outline:0;
+    border:0;
+    background:transparent;
+    padding:0;
+    cursor:pointer;
+ }
+ .dpad-button svg {
+    display:block;
+    height: calc(var(--pixel-size) * 13);
+ }
+ 
+ .dpad-button.pressed .Arrow_arrow-inset { stroke:#07c2cc; }
+ .dpad-button.pressed .Arrow_arrow-body { stroke:#17dfea; }
+ 
+ .dpad-up {
+    position: relative;
+    left: calc(var(--pixel-size) * 12);
+    top:0;
+ }
+ .dpad-down {
+    position: relative;
+    bottom:var(--pixel-size);
+    left: calc(var(--pixel-size) * 12);
+ }
+ .dpad-left {
+    position: relative;
+    top: calc(var(--pixel-size) * 12);
+    left:0;
+ }
+ .dpad-right {
+    position: relative;
+    top: calc(var(--pixel-size) * 12);
+    right:0;
+ }
+ 
+ .dpad {
+    user-select:none;
+ }
+ */
+ 
+ .corner_topleft,
+ .corner_topright,
+ .corner_bottomleft,
+ .corner_bottomright {
+    position: absolute;
+    width: var(--pixel-size);
+    height: var(--pixel-size);
+    background: var(--bg);
+    z-index:2;
+ }
+ 
+ .corner_topleft {
+    top: calc(var(--pixel-size) * -1);
+    left: calc(var(--pixel-size) * -1);
+ }
+ .corner_topright {
+    top: calc(var(--pixel-size) * -1);
+    right: calc(var(--pixel-size) * -1);
+ }
+ .corner_bottomleft {
+    bottom: calc(var(--pixel-size) * -1);
+    left: calc(var(--pixel-size) * -1);
+ }
+ .corner_bottomright {
+    bottom: calc(var(--pixel-size) * -1);
+    right: calc(var(--pixel-size) * -1);
+ }
+ 
+ .headline {
+    position:absolute;
+    top:calc(var(--pixel-size) * 2);
+    right:calc(var(--pixel-size) * 2);
+    width: calc(var(--pixel-size) * 75)
+ }
+
+
+
+
+
+ html {
+   font-size: 18px;
+ }
+ body {
+   color:black;
+   font-family: "Questrial", sans-serif;
+   background-color: #ffec63;
+   background-image: linear-gradient(
+       45deg,
+       #ffd966 25%,
+       transparent 25%,
+       transparent 75%,
+       #ffd966 75%,
+       #ffd966
+     ),
+     linear-gradient(
+       -45deg,
+       #ffd966 25%,
+       transparent 25%,
+       transparent 75%,
+       #ffd966 75%,
+       #ffd966
+     );
+   background-size: 60px 60px;
+   background-position: 0 0;
+   animation: slide 4s infinite linear;
+ }
+ 
+ @keyframes slide {
+   from {
+     background-position: 0 0;
+   }
+ 
+   to {
+     background-position: -120px 60px;
+   }
+ }
+ 
+ .modal {
+   position: absolute;
+   left: 50%;
+   top: 50%;
+   transform: translate(-50%, -50%);
+   width: auto;
+   display: inline-flex;
+   flex-direction: column;
+   align-items: center;
+   padding: 1.6rem 3rem;
+   border: 3px solid black;
+   border-radius: 5px;
+   background: white;
+   box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.2);
+ }
+ .message {
+   font-size:1.1rem;
+   margin-bottom: 1.6rem;
+   margin-top: 0;
+ }
+ .btn {
+   color:inherit;
+     font-family:inherit;
+   font-size: inherit;
+   background: white;
+   padding: 0.3rem 3.4rem;
+   border: 3px solid black;
+   margin-right: 2.6rem;
+   box-shadow: 0 0 0 black;
+   transition: all 0.2s;
+ }
+ 
+ .btn:last-child {
+   margin: 0;
+ }
+ 
+ .btn:hover {
+   box-shadow: 0.4rem 0.4rem 0 black;
+   transform: translate(-0.4rem, -0.4rem);
+ }
+ 
+ .btn:active {
+   box-shadow: 0 0 0 black;
+   transform: translate(0, 0);
+ }
+ 
+ .options {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+ }
+ 

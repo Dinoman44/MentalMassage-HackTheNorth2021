@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- documentation at http://getbootstrap.com/docs/4.1/, alternative themes at https://bootswatch.com/ -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- https://favicon.io/emoji-favicons/money-mouth-face/ -->
+        <link href="/static/favicon.ico" rel="icon">
+
+        <link href="/static/css/styles.css" rel="stylesheet">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+        {% block extra_files %}{% endblock %}
+
+        <title>Mental Massage: {% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        <div id="topbar">
+            {% if session.user_id %}
+                <button class="menubtn" onclick="window.location='/';">Home</button>
+                <button class="menubtn" onclick="window.location='/chatbot';">Chatbot</button>
+                <button class="menubtn" onclick="window.location='/game';">Play a game</button>
+                <button class="menubtn" onclick="window.location='/logout';">Sign out</button>
+                <button class="menubtn" onclick="window.location='/aboutus';">About us</button>
+            {% else %}
+                <button class="menubtn" onclick="window.location='/signup';">Sign up</button>
+                <button class="menubtn" onclick="window.location='/signin';">Sign in</button>
+            {% endif %}
+        </div>
+        <main>
+            <br>
+            {% block body %}{% endblock %}
+        </main>
+    </body>
+</html>
